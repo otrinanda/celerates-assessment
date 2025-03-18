@@ -7,8 +7,11 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
-import UserPDF from "@/components/pdf/UserPDF";
+import UserProfilePDF from "@/components/pdf/UserProfilePDF";
+import BusinessCardPDF from "@/components/pdf/BusinessCardPDF";
+import UserContractPDF from "@/components/pdf/UserContractPDF";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 // Define User type
 interface User {
@@ -39,6 +42,7 @@ export default function UserDetailPage() {
     const { id } = useParams();
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    const [selectedTemplate, setSelectedTemplate] = useState<"profile" | "business" | "contract">("profile");
     const { toast } = useToast();
 
     useEffect(() => {
@@ -66,6 +70,10 @@ export default function UserDetailPage() {
         fetchUser();
     }, [id, toast]);
 
+    const SelectedPDF =
+    selectedTemplate === "profile" ? UserProfilePDF :
+    selectedTemplate === "business" ? BusinessCardPDF :
+    UserContractPDF;
     return (
         <div className="container mx-auto p-6">
             <Link href="/users" className="text-blue-500 hover:underline mb-4 inline-block">
@@ -88,14 +96,26 @@ export default function UserDetailPage() {
                                 <DialogHeader>
                                     <DialogTitle>PDF Preview</DialogTitle>
                                 </DialogHeader>
+                                <div className="mb-4">
+                                    <Select onValueChange={(value) => setSelectedTemplate(value as "profile" | "business")}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Select Template" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="profile">User Profile</SelectItem>
+                                            <SelectItem value="business">Business Card</SelectItem>
+                                            <SelectItem value="contract">User Contract</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                                 <div className="h-[500px] overflow-auto border p-2">
                                     <PDFViewer width="100%" height="100%">
-                                        <UserPDF user={user} />
+                                        <SelectedPDF user={user} />
                                     </PDFViewer>
                                 </div>
                                 <PDFDownloadLink
-                                    document={<UserPDF user={user} />}
-                                    fileName={`User-${id}-Profile.pdf`}
+                                    document={<SelectedPDF user={user} />}
+                                    fileName={`User-${id}-${selectedTemplate}.pdf`}
                                 >
                                     {({ loading }) => (
                                         <Button size="lg" variant="default" className="mt-4">

@@ -24,38 +24,28 @@ interface User {
 }
 
 const styles = StyleSheet.create({
-    page: { padding: 30, fontSize: 12, position: "relative" },
-    header: { textAlign: "center", fontSize: 18, marginBottom: 10 },
-    footer: { 
-        position: "absolute", 
-        bottom: 30, 
-        left: 0, 
-        right: 0, 
-        textAlign: "center", 
-        fontSize: 10, 
-        color: "gray" 
-    },
-    section: { marginBottom: 10 },
+    page: { padding: 30, fontSize: 12 },
+    header: { textAlign: "center", fontSize: 18, marginBottom: 60 },
+    footer: { position: "absolute", bottom: 30, left: 0, right: 0, textAlign: "center", fontSize: 10, color: "gray" },
+    section: { marginBottom: 30 },
     title: { fontSize: 14, fontWeight: "bold", marginBottom: 5 },
     watermark: {
         position: "absolute",
-        fontSize: 50,
-        color: "rgba(200, 200, 200, 0.3)",
-        transform: "rotate(-45deg)",
-        left: "25%",
         top: "40%",
+        left: 0,
+        right: 0,
         textAlign: "center",
-        width: "50%",
+        fontSize: 40,
+        color: "rgba(0,0,0,0.1)",
+        transform: "rotate(-30deg)",
     },
 });
 
-const UserPDF = ({ user }: { user: User }) => (
+const UserProfilePDF = ({ user }: { user: User }) => (
     <Document>
         <Page size="A4" style={styles.page}>
-            <Text style={styles.header}>User Profiles Report</Text>
-
-            {/* Watermark */}
-            <Text style={styles.watermark}>Confidential</Text>
+            <Text style={styles.watermark}>CONFIDENTIAL</Text>
+            <Text style={styles.header}>User Profile Report</Text>
 
             {/* User Information */}
             <View style={styles.section}>
@@ -94,4 +84,4 @@ const UserPDF = ({ user }: { user: User }) => (
     </Document>
 );
 
-export default UserPDF;
+export default UserProfilePDF;
