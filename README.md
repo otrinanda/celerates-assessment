@@ -46,9 +46,9 @@ NEXT_PUBLIC_API_URL=https://jsonplaceholder.typicode.com
 ## API Documentation
 This application fetches user data from the JSONPlaceholder API:
 * GET /users - Fetch a list of users
-* GET /users/************:id - Fetch a specific user
-* PUT /users/************:id - Update existing user information
-* POST /users/************:id - Create new user information
+* GET /users/id - Fetch a specific user
+* PUT /users/id - Update existing user information
+* POST /users/id - Create new user information
 
 ## How It Works
 1. Users are fetched from the API and displayed.
