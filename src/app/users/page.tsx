@@ -5,22 +5,46 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-
-// Define User type
+import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
+import { Edit, Eye, Plus } from "lucide-react";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 interface User {
     id: number;
     name: string;
+    username: string;
     email: string;
-    address: {
-        city: string;
-    };
+    phone: string;
     website: string;
+    address: {
+        street: string;
+        suite: string;
+        city: string;
+        zipcode: string;
+        geo: {
+            lat: string;
+            lng: string;
+        };
+    };
+    company: {
+        name: string;
+        catchPhrase: string;
+        bs: string;
+    };
 }
 
 export default function UsersPage() {
     const [users, setUsers] = useState<User[] | null>(null);
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
+    const router = useRouter();
     const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
@@ -49,12 +73,32 @@ export default function UsersPage() {
         fetchUsers();
     }, [toast, API_URL]);
 
+    const handleView = (id: number) => {
+        router.push(`/users/${id}`);
+    };
+    const handleEdit = (id: number) => {
+        router.push(`/users/${id}/edit`);
+    };
+
     return (
         <div className="container mx-auto p-6">
+            <Breadcrumb className="mb-2">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Users</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold ">User List</h1>
                 <Link href="/users/add">
-                    <Button size="lg">Add User</Button>
+                    <Button size="lg">
+                        <Plus /> Add User
+                    </Button>
                 </Link>
             </div>
             {loading ? (
@@ -66,14 +110,30 @@ export default function UsersPage() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {users?.map((user) => (
-                        <Link key={user.id} href={`/users/${user.id}`}>
-                            <div className="border p-4 rounded-lg shadow-md hover:shadow-lg transition">
-                                <h2 className="text-lg font-semibold">{user.name}</h2>
-                                <p className="text-gray-600">{user.email}</p>
-                                <p className="text-gray-500">{user.address.city}</p>
-                                <p className="text-blue-500 hover:underline">{user.website}</p>
-                            </div>
-                        </Link>
+                        // <Link key={user.id} href={`/users/${user.id}`}>
+                        <Card key={user.id} className="hover:shadow-lg transition">
+                            <CardHeader>
+                                <CardTitle className="text-2xl font-semibold text-gray-800">
+                                    {user.name}
+                                </CardTitle>
+                                <CardDescription className="text-gray-600 text-sm font-semibold">
+                                    (@{user.username})
+                                </CardDescription>
+                            </CardHeader>
+                            <CardFooter className="flex justify-end gap-2">
+                                <Button onClick={() => handleView(user.id)} size="icon">
+                                    <Eye />
+                                </Button>
+                                <Button
+                                    variant="secondary"
+                                    onClick={() => handleEdit(user.id)}
+                                    size="icon"
+                                >
+                                    <Edit />
+                                </Button>
+                            </CardFooter>
+                        </Card>
+                        // </Link>
                     ))}
                 </div>
             )}

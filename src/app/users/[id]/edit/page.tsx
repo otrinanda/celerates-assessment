@@ -16,7 +16,16 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { Edit } from "lucide-react";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const userSchema = z.object({
     name: z
@@ -166,9 +175,21 @@ export default function EditUserPage() {
 
     return (
         <div className="container mx-auto p-6">
-            <Link href="/users" className="text-blue-500 hover:underline mb-4 inline-block">
-                &larr; Back to Users
-            </Link>
+            <Breadcrumb  className="mb-2">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/users">Users</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Edit User</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
             <h1 className="text-2xl font-bold mb-4">Edit User</h1>
             {initialData ? (
                 <Form {...form}>
@@ -336,13 +357,14 @@ export default function EditUserPage() {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" disabled={loading}>
+                        <Button className="!mt-8" size="lg" type="submit" disabled={loading}>
+                            <Edit />
                             {loading ? "Updating..." : "Update User"}
                         </Button>
                     </form>
                 </Form>
             ) : (
-                <p>Loading user data...</p>
+                <Skeleton className="h-96 w-96 rounded-lg bg-slate-200" />
             )}
         </div>
     );

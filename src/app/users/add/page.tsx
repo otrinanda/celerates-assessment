@@ -16,7 +16,8 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Link from "next/link";
+import { Plus } from "lucide-react";
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
 
 const userSchema = z.object({
     name: z
@@ -138,10 +139,22 @@ export default function AddUserPage() {
 
     return (
         <div className="container mx-auto p-6">
-            <Link href="/users" className="text-blue-500 hover:underline mb-4 inline-block">
-                &larr; Back to Users
-            </Link>
-            <h1 className="text-2xl font-bold mb-4">Add User</h1>
+            <Breadcrumb  className="mb-2">
+                <BreadcrumbList>
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbLink href="/users">Users</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    <BreadcrumbSeparator />
+                    <BreadcrumbItem>
+                        <BreadcrumbPage>Add User</BreadcrumbPage>
+                    </BreadcrumbItem>
+                </BreadcrumbList>
+            </Breadcrumb>
+            <h1 className="text-2xl font-bold mb-4 mt-4">Add User</h1>
             <Form {...form}>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
@@ -309,7 +322,8 @@ export default function AddUserPage() {
                         )}
                     />
 
-                    <Button type="submit" disabled={loading}>
+                    <Button className="!mt-8" size="lg" type="submit" disabled={loading}>
+                        <Plus/>
                         {loading ? "Adding..." : "Add User"}
                     </Button>
                 </form>
