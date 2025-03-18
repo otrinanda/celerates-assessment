@@ -41,8 +41,8 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Building2, Earth, House, Mail, Phone } from "lucide-react";
 
-// Define User type
 interface User {
     id: number;
     name: string;
@@ -135,7 +135,7 @@ export default function UserDetailPage() {
             : UserContractPDF;
     return (
         <div className="container mx-auto p-6">
-            <Breadcrumb  className="mb-2">
+            <Breadcrumb className="mb-2">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -157,7 +157,7 @@ export default function UserDetailPage() {
                 <Skeleton className="h-96 w-96 rounded-lg bg-slate-200" />
             ) : (
                 user && (
-                    <div className="w-96">
+                    <div className="w-2/3">
                         <Card className="hover:shadow-lg transition ">
                             <CardHeader>
                                 <CardTitle className="text-3xl font-semibold text-gray-800">
@@ -167,15 +167,17 @@ export default function UserDetailPage() {
                                     (@{user.username})
                                 </CardDescription>
                             </CardHeader>
-                            <CardContent className="space-y-1 text-sm">
-                                <p className="text-gray-600">
-                                    📧 <span className="font-medium text-lg">{user.email}</span>
+                            <CardContent className="space-y-6 text-sm">
+                                <p className="text-gray-600 flex gap-4 items-start">
+                                    <Mail />
+                                    <span className="font-medium text-lg">{user.email}</span>
                                 </p>
-                                <p className="text-gray-600">
-                                    📞 <span className="font-medium text-lg">{user.phone}</span>
+                                <p className="text-gray-600 flex gap-4 items-start">
+                                    <Phone />
+                                    <span className="font-medium text-lg">{user.phone}</span>
                                 </p>
-                                <p className="text-gray-600">
-                                    🌍{" "}
+                                <p className="text-gray-600 flex gap-4 items-start">
+                                    <Earth />
                                     <a
                                         href={`https://${user.website}`}
                                         className="text-blue-500 hover:underline text-lg"
@@ -183,16 +185,17 @@ export default function UserDetailPage() {
                                         {user.website}
                                     </a>
                                 </p>
-                                <p className="text-gray-600 text-lg">
-                                    🏠 {user.address.street}, {user.address.suite},{" "}
+                                <p className="text-gray-600 text-lg flex gap-4 items-start">
+                                    <House /> {user.address.street}, {user.address.suite}
                                     {user.address.city}, {user.address.zipcode}
                                 </p>
-                                <p className="text-gray-600 text-lg">
-                                    🏢 <span className="font-medium">{user.company.name}</span> -{" "}
-                                    {user.company.catchPhrase}
+                                <p className="text-gray-600 text-lg  flex gap-4 items-start">
+                                    <Building2 />
+                                    <span className="font-medium">{user.company.name} -{" "}
+                                    {user.company.catchPhrase}</span>
                                 </p>
                             </CardContent>
-                            <CardFooter className="flex justify-end items-end gap-2">
+                            <CardFooter className="flex justify-end items-end gap-4">
                                 <Link href={`/users/${id}/edit`}>
                                     <Button>Edit</Button>
                                 </Link>

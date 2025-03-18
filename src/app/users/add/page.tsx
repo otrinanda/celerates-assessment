@@ -17,7 +17,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Plus } from "lucide-react";
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import {
+    Breadcrumb,
+    BreadcrumbItem,
+    BreadcrumbLink,
+    BreadcrumbList,
+    BreadcrumbPage,
+    BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 
 const userSchema = z.object({
     name: z
@@ -139,7 +146,7 @@ export default function AddUserPage() {
 
     return (
         <div className="container mx-auto p-6">
-            <Breadcrumb  className="mb-2">
+            <Breadcrumb className="mb-2">
                 <BreadcrumbList>
                     <BreadcrumbItem>
                         <BreadcrumbLink href="/">Home</BreadcrumbLink>
@@ -160,7 +167,6 @@ export default function AddUserPage() {
                     onSubmit={form.handleSubmit(onSubmit)}
                     className="w-2/3 space-y-6 border p-6 rounded-lg shadow-md"
                 >
-                    {/* Fields for user data */}
                     <h1 className="text-xl font-bold mb-4">User Information </h1>
                     <FormField
                         control={form.control}
@@ -228,7 +234,6 @@ export default function AddUserPage() {
                         )}
                     />
                     <h1 className="text-xl font-bold mb-4">User Address </h1>
-                    {/* Address Fields */}
                     <FormField
                         control={form.control}
                         name="address.street"
@@ -323,7 +328,7 @@ export default function AddUserPage() {
                     />
 
                     <Button className="!mt-8" size="lg" type="submit" disabled={loading}>
-                        <Plus/>
+                        <Plus />
                         {loading ? "Adding..." : "Add User"}
                     </Button>
                 </form>

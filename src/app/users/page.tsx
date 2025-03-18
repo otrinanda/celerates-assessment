@@ -16,6 +16,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+
 interface User {
     id: number;
     name: string;
@@ -110,7 +111,6 @@ export default function UsersPage() {
             ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {users?.map((user) => (
-                        // <Link key={user.id} href={`/users/${user.id}`}>
                         <Card key={user.id} className="hover:shadow-lg transition">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-semibold text-gray-800">
@@ -133,7 +133,6 @@ export default function UsersPage() {
                                 </Button>
                             </CardFooter>
                         </Card>
-                        // </Link>
                     ))}
                 </div>
             )}
