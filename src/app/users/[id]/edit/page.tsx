@@ -92,11 +92,12 @@ export default function EditUserPage() {
     const { id } = useParams();
     const [loading, setLoading] = useState(false);
     const [initialData, setInitialData] = useState<UserFormValues | null>(null);
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         async function fetchUser() {
             try {
-                const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+                const response = await fetch(`${API_URL}/users/${id}`);
                 const data = await response.json();
                 setInitialData({
                     name: data.name,
@@ -116,7 +117,7 @@ export default function EditUserPage() {
             }
         }
         fetchUser();
-    }, [id, toast]);
+    }, [id, toast, API_URL]);
 
     const form = useForm<UserFormValues>({
         resolver: zodResolver(userSchema),
@@ -135,7 +136,7 @@ export default function EditUserPage() {
     async function onSubmit(data: UserFormValues) {
         setLoading(true);
         try {
-            const response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, {
+            const response = await fetch(`${API_URL}/users/${id}`, {
                 method: "PUT",
                 headers: {
                     "Content-Type": "application/json",

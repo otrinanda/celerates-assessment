@@ -21,11 +21,12 @@ export default function UsersPage() {
     const [users, setUsers] = useState<User[] | null>(null);
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const res = await fetch("https://jsonplaceholder.typicode.com/users");
+                const res = await fetch(`${API_URL}/users`);
                 if (!res.ok) {
                     throw new Error("Failed to fetch users");
                 }
@@ -46,7 +47,7 @@ export default function UsersPage() {
             }
         }
         fetchUsers();
-    }, [toast]);
+    }, [toast, API_URL]);
 
     return (
         <div className="container mx-auto p-6">

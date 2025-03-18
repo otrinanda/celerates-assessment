@@ -44,13 +44,14 @@ export default function UserDetailPage() {
     const [loading, setLoading] = useState(true);
     const [selectedTemplate, setSelectedTemplate] = useState<"profile" | "business" | "contract">("profile");
     const { toast } = useToast();
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         if (!id) return;
 
         async function fetchUser() {
             try {
-                const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+                const res = await fetch(`${API_URL}/users/${id}`);
                 if (!res.ok) {
                     throw new Error("Failed to fetch user details");
                 }
