@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 // Define User type
 interface User {
@@ -30,10 +31,10 @@ export default function UsersPage() {
                 }
                 const data = await res.json();
                 setUsers(data);
-                toast({
-                    title: "Success",
-                    description: "Success to fetch users.",
-                });
+                // toast({
+                //     title: "Success",
+                //     description: "Success to fetch users.",
+                // });
             } catch {
                 toast({
                     title: "Error",
@@ -49,7 +50,12 @@ export default function UsersPage() {
 
     return (
         <div className="container mx-auto p-6">
-            <h1 className="text-2xl font-bold mb-4">User List</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold ">User List</h1>
+                <Link href="/users/add">
+                    <Button size="lg">Add User</Button>
+                </Link>
+            </div>
             {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {[...Array(8)].map((_, index) => (

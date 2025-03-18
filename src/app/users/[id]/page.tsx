@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 // Define User type
 interface User {
@@ -34,10 +35,10 @@ export default function UserDetailPage() {
                 }
                 const data = await res.json();
                 setUser(data);
-                toast({
-                    title: "Success",
-                    description: "Success to fetch users.",
-                });
+                // toast({
+                //     title: "Success",
+                //     description: "Success to fetch users.",
+                // });
             } catch {
                 toast({
                     title: "Error",
@@ -57,7 +58,12 @@ export default function UserDetailPage() {
             <Link href="/users" className="text-blue-500 hover:underline mb-4 inline-block">
                 &larr; Back to Users
             </Link>
-            <h1 className="text-2xl font-bold mb-4">User Details</h1>
+            <div className="flex justify-between items-center mb-4">
+                <h1 className="text-2xl font-bold mb-4">User Details</h1>
+                <Link href={`/users/${id}/edit`}>
+                    <Button size="lg">Edit User</Button>
+                </Link>
+            </div>
             {loading ? (
                 <Skeleton className="h-32 w-full rounded-lg bg-slate-200" />
             ) : (
