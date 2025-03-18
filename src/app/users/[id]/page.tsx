@@ -6,16 +6,33 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
+import UserPDF from "@/components/pdf/UserPDF";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 
 // Define User type
 interface User {
     id: number;
     name: string;
+    username: string;
     email: string;
-    address: {
-        city: string;
-    };
+    phone: string;
     website: string;
+    address: {
+        street: string;
+        suite: string;
+        city: string;
+        zipcode: string;
+        geo: {
+            lat: string;
+            lng: string;
+        };
+    };
+    company: {
+        name: string;
+        catchPhrase: string;
+        bs: string;
+    };
 }
 
 export default function UserDetailPage() {
@@ -35,10 +52,6 @@ export default function UserDetailPage() {
                 }
                 const data = await res.json();
                 setUser(data);
-                // toast({
-                //     title: "Success",
-                //     description: "Success to fetch users.",
-                // });
             } catch {
                 toast({
                     title: "Error",
@@ -60,9 +73,40 @@ export default function UserDetailPage() {
             </Link>
             <div className="flex justify-between items-center mb-4">
                 <h1 className="text-2xl font-bold mb-4">User Details</h1>
-                <Link href={`/users/${id}/edit`}>
-                    <Button size="lg">Edit User</Button>
-                </Link>
+                <div className="space-x-4">
+                    <Link href={`/users/${id}/edit`}>
+                        <Button size="lg">Edit User</Button>
+                    </Link>
+                    {user && (
+                        <Dialog>
+                            <DialogTrigger asChild>
+                                <Button size="lg" variant="outline">
+                                    Preview PDF
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-4xl w-full">
+                                <DialogHeader>
+                                    <DialogTitle>PDF Preview</DialogTitle>
+                                </DialogHeader>
+                                <div className="h-[500px] overflow-auto border p-2">
+                                    <PDFViewer width="100%" height="100%">
+                                        <UserPDF user={user} />
+                                    </PDFViewer>
+                                </div>
+                                <PDFDownloadLink
+                                    document={<UserPDF user={user} />}
+                                    fileName={`User-${id}-Profile.pdf`}
+                                >
+                                    {({ loading }) => (
+                                        <Button size="lg" variant="default" className="mt-4">
+                                            {loading ? "Preparing PDF..." : "Download PDF"}
+                                        </Button>
+                                    )}
+                                </PDFDownloadLink>
+                            </DialogContent>
+                        </Dialog>
+                    )}
+                </div>
             </div>
             {loading ? (
                 <Skeleton className="h-32 w-full rounded-lg bg-slate-200" />
