@@ -98,7 +98,7 @@ export default function AddUserPage() {
     const { toast } = useToast();
     const router = useRouter();
     const [loading, setLoading] = useState(false);
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    // const API_URL = process.env.NEXT_PUBLIC_API_URL;
     const form = useForm<UserFormValues>({
         resolver: zodResolver(userSchema),
         defaultValues: {
@@ -115,7 +115,8 @@ export default function AddUserPage() {
     async function onSubmit(data: UserFormValues) {
         setLoading(true);
         try {
-            const response = await fetch(`${API_URL}/users`, {
+            // const response = await fetch(`${API_URL}/users`, {
+            const response = await fetch(`https://jsonplaceholder.typicode.com/users`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

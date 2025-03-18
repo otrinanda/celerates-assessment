@@ -87,14 +87,16 @@ export default function UserDetailPage() {
         "profile"
     );
     const { toast } = useToast();
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    // const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         if (!id) return;
 
         async function fetchUser() {
             try {
-                const res = await fetch(`${API_URL}/users/${id}`);
+                
+                // const res = await fetch(`${API_URL}/users/${id}`);
+                const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
                 if (!res.ok) {
                     throw new Error("Failed to fetch user details");
                 }
@@ -112,13 +114,14 @@ export default function UserDetailPage() {
         }
 
         fetchUser();
-    }, [id, toast, API_URL]);
+    }, [id, toast]);
 
     const deleteUser = async () => {
         if (!id) return;
 
         try {
-            const res = await fetch(`${API_URL}/users/${id}`, { method: "DELETE" });
+            // const res = await fetch(`${API_URL}/users/${id}`, { method: "DELETE" });
+            const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`, { method: "DELETE" });
 
             if (!res.ok) {
                 throw new Error("Failed to delete user");

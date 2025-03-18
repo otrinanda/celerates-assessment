@@ -47,12 +47,13 @@ export default function UsersPage() {
     const [loading, setLoading] = useState(true);
     const { toast } = useToast();
     const router = useRouter();
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    // const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
     useEffect(() => {
         async function fetchUsers() {
             try {
-                const res = await fetch(`${API_URL}/users`);
+                // const res = await fetch(`${API_URL}/users`);
+                const res = await fetch(`https://jsonplaceholder.typicode.com/users`);
                 if (!res.ok) {
                     throw new Error("Failed to fetch users");
                 }
@@ -73,7 +74,7 @@ export default function UsersPage() {
             }
         }
         fetchUsers();
-    }, [toast, API_URL]);
+    }, [toast]);
 
     const handleView = (id: number) => {
         router.push(`/users/${id}`);
@@ -106,7 +107,7 @@ export default function UsersPage() {
             {loading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     {[...Array(8)].map((_, index) => (
-                        <Skeleton key={index} className="h-24 w-full rounded-lg bg-slate-200" />
+                        <Skeleton key={index} className="h-48 w-80 rounded-lg bg-slate-200" />
                     ))}
                 </div>
             ) : (
