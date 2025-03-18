@@ -41,7 +41,17 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { Building2, Earth, House, Mail, Phone } from "lucide-react";
+import {
+    Building2,
+    Download,
+    Earth,
+    Edit,
+    FileDown,
+    House,
+    Mail,
+    Phone,
+    Trash,
+} from "lucide-react";
 
 interface User {
     id: number;
@@ -191,17 +201,23 @@ export default function UserDetailPage() {
                                 </p>
                                 <p className="text-gray-600 text-lg  flex gap-4 items-start">
                                     <Building2 />
-                                    <span className="font-medium">{user.company.name} -{" "}
-                                    {user.company.catchPhrase}</span>
+                                    <span className="font-medium">
+                                        {user.company.name} - {user.company.catchPhrase}
+                                    </span>
                                 </p>
                             </CardContent>
                             <CardFooter className="flex justify-end items-end gap-4">
                                 <Link href={`/users/${id}/edit`}>
-                                    <Button>Edit</Button>
+                                    <Button>
+                                        {" "}
+                                        <Edit /> Edit
+                                    </Button>
                                 </Link>
                                 <Dialog open={open} onOpenChange={setOpen}>
                                     <DialogTrigger asChild>
-                                        <Button variant="destructive">Delete</Button>
+                                        <Button variant="destructive">
+                                            <Trash /> Delete
+                                        </Button>
                                     </DialogTrigger>
                                     <DialogContent>
                                         <DialogHeader>
@@ -227,13 +243,18 @@ export default function UserDetailPage() {
                                 {user && (
                                     <Dialog>
                                         <DialogTrigger asChild>
-                                            <Button variant="outline">Export</Button>
+                                            <Button variant="outline">
+                                                <FileDown /> Export
+                                            </Button>
                                         </DialogTrigger>
                                         <DialogContent className="max-w-4xl w-full">
                                             <DialogHeader>
                                                 <DialogTitle>PDF Preview</DialogTitle>
                                             </DialogHeader>
-                                            <div className="mb-4">
+                                            <div className="mb-4 flex justify-between">
+                                                <h3 className="text-3xl font-semibold text-gray-800">
+                                                    {user.name}
+                                                </h3>
                                                 <Select
                                                     onValueChange={(value) =>
                                                         setSelectedTemplate(
@@ -272,6 +293,7 @@ export default function UserDetailPage() {
                                                         variant="default"
                                                         className="mt-4"
                                                     >
+                                                        <Download />
                                                         {loading
                                                             ? "Preparing PDF..."
                                                             : "Download PDF"}

@@ -16,6 +16,7 @@ import {
     BreadcrumbPage,
     BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface User {
     id: number;
@@ -116,21 +117,35 @@ export default function UsersPage() {
                                 <CardTitle className="text-2xl font-semibold text-gray-800">
                                     {user.name}
                                 </CardTitle>
-                                <CardDescription className="text-gray-600 text-sm font-semibold">
-                                    (@{user.username})
+                                <CardDescription className="text-gray-600 text-sm font-extralight">
+                                    {user.email} | {user.company.name}
                                 </CardDescription>
                             </CardHeader>
                             <CardFooter className="flex justify-end gap-2">
-                                <Button onClick={() => handleView(user.id)} size="icon">
-                                    <Eye />
-                                </Button>
-                                <Button
-                                    variant="secondary"
-                                    onClick={() => handleEdit(user.id)}
-                                    size="icon"
-                                >
-                                    <Edit />
-                                </Button>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button onClick={() => handleView(user.id)} size="icon">
+                                                <Eye />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent>View User</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                variant="secondary"
+                                                onClick={() => handleEdit(user.id)}
+                                                size="icon"
+                                            >
+                                                <Edit />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent>Edit User</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
                             </CardFooter>
                         </Card>
                     ))}
